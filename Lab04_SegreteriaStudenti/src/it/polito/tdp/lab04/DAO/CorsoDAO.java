@@ -34,14 +34,10 @@ public class CorsoDAO {
 				int numeroCrediti = rs.getInt("crediti");
 				String nome = rs.getString("nome");
 				int periodoDidattico = rs.getInt("pd");
-
-				System.out.println(codins + " " + numeroCrediti + " " + nome + " " + periodoDidattico);
-				
-				
+			
 				Corso c = new Corso (codins, numeroCrediti, nome, periodoDidattico);
 				
 				corsi.add(c);
-	
 			}
 			
 			conn.close();
