@@ -86,7 +86,7 @@ public class SegreteriaStudentiController {
     	    	
 	    if ( choiceCorso.getSelectionModel().getSelectedItem() != null  &&   model.getStudente(txtId.getText())  != null ) {
 	    			    		
-	    	if( model.controlloIscrizione(txtId.getText(), choiceCorso.getSelectionModel().getSelectedItem()) ) 
+	    	if( model.controlloIscrizione( txtId.getText(), choiceCorso.getSelectionModel().getSelectedItem()) ) 
 	    			
 	    		txtResult.setText("Studente già iscritto a questo corso");
 	   	    		
@@ -121,7 +121,30 @@ public class SegreteriaStudentiController {
 
     @FXML
     void doIscrivi(ActionEvent event) {
-
+    	
+    	if (txtId.getText().matches("[0-9]+") == false)
+    	
+    		txtResult.setText("Matricola errata");
+    	
+	    else if( (model.getStudente(txtId.getText()) ) == null) 
+	    		
+	    	txtResult.setText("Matricola non presente");
+    	
+    	if(choiceCorso.getSelectionModel().getSelectedItem() != null  &&   model.getStudente(txtId.getText())  != null) {
+    		
+    		if( model.controlloIscrizione( txtId.getText(), choiceCorso.getSelectionModel().getSelectedItem()) ) 
+    			
+	    		txtResult.setText("Studente già iscritto a questo corso");
+	   	    		
+    		else {
+    			
+    			Studente s = new Studente(txtId.getText());
+    			
+    			if ( model.iscriviStudACorso( s , choiceCorso.getSelectionModel().getSelectedItem() ) )
+    				
+    				txtResult.setText("Studente iscritto al corso!");
+    		}
+    	}
     }
 
     @FXML

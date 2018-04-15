@@ -15,6 +15,10 @@ public class Studente {
 		this.corsoDiStudi = corsoDiStudi;
 	}
 	
+	public Studente(String matricola) {
+		this.matricola = matricola;
+	}
+
 	public String getMatricola() {
 		return matricola;
 	}

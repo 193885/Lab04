@@ -47,4 +47,14 @@ public class Model {
 			else
 				return false;
 	}
+	
+
+	public boolean iscriviStudACorso(Studente studente, Corso corso) {
+		
+		if( corsoDao.inscriviStudenteACorso(studente, corso) )
+			
+			return true;
+		else 
+			return false;	
+	}
 }

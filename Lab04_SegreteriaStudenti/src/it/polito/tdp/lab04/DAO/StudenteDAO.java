@@ -39,6 +39,8 @@ public class StudenteDAO {
 				studenti.put(matricola,s);
 	
 			}
+			
+			conn.close();
 									
 		} catch (SQLException e) {
 			
@@ -76,6 +78,8 @@ public class StudenteDAO {
 				corsi.add(c);
 			}
 			
+			conn.close();
+			
 		} catch (SQLException e) {
 			
 			 e.printStackTrace();
@@ -103,6 +107,8 @@ public class StudenteDAO {
 			while (rs.next()) 
 				
 				studentiIscritti.add(rs.getString("matricola"));
+			
+			conn.close();
 							
 		} catch (SQLException e) {
 			
