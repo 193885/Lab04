@@ -22,6 +22,7 @@ public class CorsoDAO {
 		List<Corso> corsi = new LinkedList<Corso>();
 
 		try {
+			
 			Connection conn = ConnectDB.getConnection();
 			PreparedStatement st = conn.prepareStatement(sql);
 
@@ -35,17 +36,24 @@ public class CorsoDAO {
 				int periodoDidattico = rs.getInt("pd");
 
 				System.out.println(codins + " " + numeroCrediti + " " + nome + " " + periodoDidattico);
-
-				// Crea un nuovo JAVA Bean Corso
-				// Aggiungi il nuovo oggetto Corso alla lista corsi
+				
+				
+				Corso c = new Corso (codins, numeroCrediti, nome, periodoDidattico);
+				
+				corsi.add(c);
+	
 			}
-
-			return corsi;
-
+			
+			corsi.add(null);
+					
 		} catch (SQLException e) {
-			// e.printStackTrace();
+			
+			 e.printStackTrace();
 			throw new RuntimeException("Errore Db");
 		}
+		
+		return corsi;
+
 	}
 
 	/*
@@ -58,10 +66,44 @@ public class CorsoDAO {
 	/*
 	 * Ottengo tutti gli studenti iscritti al Corso
 	 */
-	public void getStudentiIscrittiAlCorso(Corso corso) {
-		// TODO
-	}
+	public List <Studente > getStudentiIscrittiAlCorso(String CodiceCorso) {
+		
+		final String sql = "SELECT * FROM studente WHERE matricola "
+						+ "	IN (SELECT matricola FROM iscrizione WHERE iscrizione.codins = ? )";
 
+		List<Studente> studentiIscritti = new LinkedList<Studente>();
+
+		try {
+			
+			Connection conn = ConnectDB.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			
+			st.setString(1, CodiceCorso);
+
+			ResultSet rs = st.executeQuery();
+
+			while (rs.next()) {
+				
+				String matricola = rs.getString("matricola");
+				String cognome = rs.getString("cognome");
+				String nome = rs.getString("nome");
+				String corsoDiStudi = rs.getString("CDS");
+				
+				Studente s = new Studente( matricola,nome, cognome, corsoDiStudi);
+	
+				studentiIscritti.add(s);
+		
+			}
+			
+		} catch (SQLException e) {
+			
+			 e.printStackTrace();
+			throw new RuntimeException("Errore Db");
+		}
+		
+		return studentiIscritti;
+	}
+	
 	/*
 	 * Data una matricola ed il codice insegnamento, iscrivi lo studente al corso.
 	 */
